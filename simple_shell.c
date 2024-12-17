@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <errno.h>
-
-extern char **environ; /* Variable global para el entorno */
+#include "main.h"
 
 /**
  * main - Simple UNIX command line interpreter
@@ -18,10 +10,7 @@ int main(void)
 	char *line = NULL;   /* Buffer para la línea ingresada */
 	size_t len = 0;      /* Tamaño del buffer */
 	ssize_t nread;       /* Número de caracteres leídos */
-	pid_t pid;           /* ID del proceso hijo */
-	int status;          /* Estado del proceso hijo */
-
-	while (1)
+		while (1)
 	{
 		/* Mostrar el prompt solo si la entrada es interactiva */
 		if (isatty(STDIN_FILENO))
@@ -45,29 +34,8 @@ int main(void)
 		if (strlen(line) == 0)
 			continue;
 
-		pid = fork(); /* Crear un proceso hijo */
-
-		if (pid == 0) /* Código del hijo */
-		{
-			char *argv[2]; /* Array de argumentos (comando + NULL) */
-			argv[0] = line;
-			argv[1] = NULL;
-
-			if (execve(argv[0], argv, environ) == -1) /* Ejecutar el comando */
-			{
-				perror("./shell"); /* Imprimir mensaje de error si execve falla */
-				exit(EXIT_FAILURE);
-			}
-		}
-		else if (pid > 0) /* Código del padre */
-		{
-			wait(&status); /* Esperar a que el proceso hijo termine */
-		}
-		else /* Error en fork */
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
+		/* Llamar a _fork para ejecutar el comando */
+		_fork(line);
 	}
 
 	free(line); /* Liberar la memoria asignada por getline */
