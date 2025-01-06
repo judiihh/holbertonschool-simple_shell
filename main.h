@@ -1,7 +1,7 @@
-#ifndef MAIN_H /* Protección contra inclusión múltiple */
+#ifndef MAIN_H /* Include guard */
 #define MAIN_H
 
-/* Inclusión de librerías necesarias */
+/* Include necessary libraries */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,8 +10,15 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-extern char **environ; /* Declarar la variable global del entorno */
+extern char **environ; /* Global environment variable */
 
-/* Prototipos de funciones */
+/* Function prototypes */
+/**
+ * _fork.c - Creates a child process and executes a command.
+ * @line: Input string containing the command.
+ *
+ * Return: PID of the child process, or -1 on failure.
+ */
 int _fork(char *line);
 
+#endif /* MAIN_H */
