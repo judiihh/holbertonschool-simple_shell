@@ -1,0 +1,46 @@
+
+---
+
+### **man_1_simple_shell Updates**
+```man
+.TH SIMPLE_SHELL 1 "December 2024" "Simple Shell" "User Commands"
+
+.SH NAME
+simple_shell \- a custom implementation of the Unix shell
+
+.SH SYNOPSIS
+.B simple_shell
+[command] [arguments]
+
+.SH DESCRIPTION
+.B simple_shell
+is a custom implementation of a Unix-like shell. It provides a command-line interface to execute commands and manage processes.
+
+Current features include:
+1. Displays a prompt and waits for user commands.
+2. Executes commands with or without arguments.
+3. Handles EOF (`Ctrl+D`) and errors gracefully.
+4. Resolves commands using the `PATH`.
+5. Implements built-ins:
+   - `exit`: Terminates the shell.
+   - `env`: Displays the current environment.
+
+.SH USAGE
+Interactive Mode:
+.EX
+$ ./hsh
+($) /bin/ls
+file1 file2 file3
+($) exit
+.EX
+
+Non-Interactive Mode:
+.EX
+$ echo "/bin/ls" | ./hsh
+file1 file2 file3
+.EX
+
+.SH AUTHORS
+Adolfo Rodriguez <adolfo.rodriguez2231@gmail.com>
+Judith Espinal <j.espinalm12@gmail.com>
+
