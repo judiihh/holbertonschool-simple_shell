@@ -7,37 +7,38 @@
  */
 int main(void)
 {
-	char *line = NULL;   /* Buffer para la línea ingresada */
-	size_t len = 0;      /* Tamaño del buffer */
-	ssize_t nread;       /* Número de caracteres leídos */
+	char *line = NULL;   /* Buffer for input line */
+	size_t len = 0;      /* Buffer size */
+	ssize_t nread;       /* Number of characters read */
+
 		while (1)
-	{
-		/* Mostrar el prompt solo si la entrada es interactiva */
-		if (isatty(STDIN_FILENO))
-			printf("($) ");
-
-		/* Leer la entrada del usuario */
-		nread = getline(&line, &len, stdin);
-
-		/* Manejar EOF (Ctrl+D) */
-		if (nread == -1)
 		{
+			/* Display the prompt if input is interactive */
 			if (isatty(STDIN_FILENO))
-				printf("\nExiting shell...\n");
-			break;
+				printf("($) ");
+			
+			/* Read user input */
+			nread = getline(&line, &len, stdin);
+			
+			/* Handle EOF (Ctrl+D) */
+			if (nread == -1)
+			{
+				if (isatty(STDIN_FILENO))
+					printf("\nExiting shell...\n");
+				break;
+			}
+			
+			/* Remove trailing newline */
+			line[strcspn(line, "\n")] = '\0';
+			
+			/* Skip empty lines */
+			if (line[0] == '\0')
+				continue;
+			
+			/* Execute the command */
+			_fork(line);
 		}
-
-		/* Eliminar el salto de línea al final */
-		line[strcspn(line, "\n")] = '\0';
-
-		/* Ignorar líneas vacías */
-		if (strlen(line) == 0)
-			continue;
-
-		/* Llamar a _fork para ejecutar el comando */
-		_fork(line);
-	}
-
-	free(line); /* Liberar la memoria asignada por getline */
-	return (0);
+		
+		free(line); /* Free memory allocated by getline */
+		return (0);
 }
