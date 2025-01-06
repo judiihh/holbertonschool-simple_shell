@@ -22,7 +22,7 @@ void execute_commands(char *line)
 	{
 		if (fork() == 0)
 		{
-			char *argv[2]; /* Declare here because it's scoped to this block */
+			char *argv[2];
 
 			argv[0] = command;
 			argv[1] = NULL;
@@ -37,6 +37,7 @@ void execute_commands(char *line)
 		{
 			wait(NULL); /* Wait for child process */
 		}
+
 		/* Get the next command */
 		command = strtok(NULL, delim);
 	}

@@ -8,10 +8,10 @@
  */
 char *trim_spaces(char *line)
 {
-	char *start, *end;
+	char *start = line;
+	char *end;
 
 	/* Trim leading spaces */
-	start = line;
 	while (*start == ' ')
 		start++;
 
