@@ -16,10 +16,10 @@ int main(void)
 			/* Display the prompt if input is interactive */
 			if (isatty(STDIN_FILENO))
 				printf("($) ");
-			
+
 			/* Read user input */
 			nread = getline(&line, &len, stdin);
-			
+
 			/* Handle EOF (Ctrl+D) */
 			if (nread == -1)
 			{
@@ -27,18 +27,18 @@ int main(void)
 					printf("\nExiting shell...\n");
 				break;
 			}
-			
+
 			/* Remove trailing newline */
 			line[strcspn(line, "\n")] = '\0';
-			
+
 			/* Skip empty lines */
 			if (line[0] == '\0')
 				continue;
-			
+
 			/* Execute the command */
 			_fork(line);
 		}
-		
+
 		free(line); /* Free memory allocated by getline */
 		return (0);
 }
