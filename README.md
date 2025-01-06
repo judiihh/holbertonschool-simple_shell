@@ -48,7 +48,6 @@ This project is designed for:
 
 ### Compilation Instructions
 To compile the shell, use:
-- ```bash
 'gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh' on Ubuntu 20.04 LTS.
 
 ## Language
