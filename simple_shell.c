@@ -1,44 +1,40 @@
 #include "main.h"
 
 /**
- * main - Simple UNIX command line interpreter
+ * _fork - Creates a child process and executes a command.
+ * @line: Input string containing the command to execute.
  *
- * Return: Always 0 (Success)
+ * Return: The PID of the child process, or -1 on failure.
  */
-int main(void)
+int _fork(char *line)
 {
-	char *line = NULL;   /* Buffer for input line */
-	size_t len = 0;      /* Buffer size */
-	ssize_t nread;       /* Number of characters read */
+	pid_t pid;
+	int status;
 
-		while (1)
+	pid = fork(); /* Create a child process */
+
+	if (pid == 0) /* Child process */
+	{
+		char *argv[2]; /* Array of arguments (command + NULL) */
+
+		argv[0] = line;
+		argv[1] = NULL;
+
+		if (execve(argv[0], argv, environ) == -1)
 		{
-			/* Display the prompt if input is interactive */
-			if (isatty(STDIN_FILENO))
-				printf("($) ");
-
-			/* Read user input */
-			nread = getline(&line, &len, stdin);
-
-			/* Handle EOF (Ctrl+D) */
-			if (nread == -1)
-			{
-				if (isatty(STDIN_FILENO))
-					printf("\nExiting shell...\n");
-				break;
-			}
-
-			/* Remove trailing newline */
-			line[strcspn(line, "\n")] = '\0';
-
-			/* Skip empty lines */
-			if (line[0] == '\0')
-				continue;
-
-			/* Execute the command */
-			_fork(line);
+			perror("./shell");
+			exit(EXIT_FAILURE);
 		}
+	}
+	else if (pid > 0) /* Parent process */
+	{
+		wait(&status); /* Wait for the child process to terminate */
+	}
+	else /* Error in fork */
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
 
-		free(line); /* Free memory allocated by getline */
-		return (0);
+	return (pid);
 }
