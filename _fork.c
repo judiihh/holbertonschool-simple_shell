@@ -19,15 +19,20 @@ int _fork(char *line)
 {
 	pid_t pid;
 	int status;
+	char *argv[100]; /* Array to hold program and arguments */
+	int i = 0;
+
+	/* Tokenize the input line into program and arguments */
+	argv[i] = strtok(line, " ");
+	while (argv[i] != NULL && i < 99) /* Limit to 100 arguments */
+	{
+		i++;
+		argv[i] = strtok(NULL, " ");
+	}
 
 	pid = fork(); /* Create a child process */
 	if (pid == 0) /* Child process */
 	{
-		char *argv[2]; /* Declare an array for the command and arguments */
-
-		argv[0] = line; /* Assign the command */
-		argv[1] = NULL; /* Null-terminate the argument list */
-
 		if (execve(argv[0], argv, environ) == -1) /* Execute the command */
 		{
 			perror("./shell");
