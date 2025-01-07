@@ -63,6 +63,21 @@ char *find_command(char **argv)
 	return (NULL);
 }
 
+
+/**
+ * print_env - Prints the current environment variables.
+ */
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+}
+
 /**
  * _fork - Creates a child process to execute a command.
  * @line: The input string containing the command to execute.
@@ -79,13 +94,12 @@ int _fork(char *line)
 
 	tokenize_input(line, argv);
 
-	/* Handle built-in "exit" */
-	if (argv[0] && strcmp(argv[0], "exit") == 0)
+	/* Handle built-in "env" */
+	if (argv[0] && strcmp(argv[0], "env") == 0)
 	{
-		free(line); /* Free allocated memory */
-		exit(0);    /* Exit the shell */
-	}
-	cmd = find_command(argv);
+		print_env();
+		return (0);
+	}	cmd = find_command(argv);
 
 	if (!cmd)
 	{
