@@ -78,6 +78,13 @@ int _fork(char *line)
 	char *cmd;
 
 	tokenize_input(line, argv);
+
+	/* Handle built-in "exit" */
+	if (argv[0] && strcmp(argv[0], "exit") == 0)
+	{
+		free(line); /* Free allocated memory */
+		exit(0);    /* Exit the shell */
+	}
 	cmd = find_command(argv);
 
 	if (!cmd)
