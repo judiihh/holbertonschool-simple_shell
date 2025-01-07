@@ -16,5 +16,6 @@ extern char **environ;
 /* Function prototypes */
 int _fork(char *line);
 char *trim_spaces(char *line);
+void execute_commands(char *line);
 
 #endif /* MAIN_H */
