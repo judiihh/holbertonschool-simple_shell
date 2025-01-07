@@ -1,5 +1,4 @@
 #include "main.h"
-#include "commands.h"
 
 /**
  * main - Entry point of the Simple Shell program
@@ -14,7 +13,7 @@
 int main(void)
 {
 	char *line = NULL;
-	char *trimmed_line; /* Temporary pointer for trimmed input */
+	char *trimmed_line; /* Declare variable at the top of the block */
 	size_t len = 0;
 	ssize_t nread;
 
@@ -38,15 +37,15 @@ int main(void)
 		/* Remove trailing newline */
 		line[strcspn(line, "\n")] = '\0';
 
-		/* Use a temporary pointer to store trimmed input */
+		/* Trim leading and trailing spaces */
 		trimmed_line = trim_spaces(line);
 
 		/* Ignore empty input */
 		if (strlen(trimmed_line) == 0)
 			continue;
 
-		/* Execute commands */
-		execute_commands(trimmed_line);
+		/* Execute commands using _fork */
+		_fork(trimmed_line);
 	}
 
 	free(line); /* Free the original buffer allocated by getline */
