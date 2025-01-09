@@ -56,9 +56,10 @@ int _fork(char *line)
 	cmd = find_command_in_path(argv[0]);
 	if (!cmd)
 	{
-		fprintf(stderr, "%s: command not found\n", argv[0]);
-		return (127);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		return (127); /* Código estándar para "command not found" */
 	}
+
 
 	return (execute_command(cmd, argv));
 }
