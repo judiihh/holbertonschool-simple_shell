@@ -1,22 +1,33 @@
-#include "main.h"
 
 /**
- * get_path_env - Retrieves the value of the PATH environment variable.
+ * get_path_env -Retrieves the value of the PATH or PATH1 environment variable.
  *
- * Return: Pointer to the value of the PATH variable, or NULL if not found.
+ * Return: Pointer to the value of PATH or PATH1, or NULL if not found.
  */
 char *get_path_env(void)
 {
 	int i = 0;
 
+	/* Buscar PATH primero */
 	while (environ[i])
 	{
 		if (strncmp(environ[i], "PATH=", 5) == 0)
-			return (environ[i] + 5); /* Skip "PATH=" */
+			return (environ[i] + 5); /* Omitir "PATH=" */
 		i++;
 	}
-	return (NULL);
+
+	/* Si PATH no existe, buscar PATH1 */
+	i = 0;
+	while (environ[i])
+	{
+		if (strncmp(environ[i], "PATH1=", 6) == 0)
+			return (environ[i] + 6); /* Omitir "PATH1=" */
+		i++;
+	}
+
+	return (NULL); /* Ninguna ruta encontrada */
 }
+
 
 /**
  * find_command_in_path - Finds the full path of a command.

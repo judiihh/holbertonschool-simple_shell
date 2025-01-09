@@ -60,7 +60,6 @@ int _fork(char *line)
 		return (127); /* Código estándar para "command not found" */
 	}
 
-
 	return (execute_command(cmd, argv));
 }
 
