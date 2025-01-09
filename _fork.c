@@ -24,9 +24,11 @@ int execute_command(char *cmd, char **argv)
 	}
 	else if (pid > 0) /* Parent process */
 	{
-		wait(&status);
-		free(cmd);
-		return (WEXITSTATUS(status));
+		wait(&status); /* Wait for the child process */
+
+		/* Return the exit status of the child process */
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status)); /* Exit status of the child */
 	}
 	else /* Fork failed */
 	{
