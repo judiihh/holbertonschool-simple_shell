@@ -1,4 +1,4 @@
-
+#include "main.h"
 /**
  * get_path_env -Retrieves the value of the PATH or PATH1 environment variable.
  *
