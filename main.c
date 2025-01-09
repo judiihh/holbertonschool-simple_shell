@@ -1,32 +1,31 @@
 #include "main.h"
 
 /**
+ * display_prompt - Displays the shell prompt.
+ */
+void display_prompt(void)
+{
+	if (isatty(STDIN_FILENO))
+		printf("($) ");
+}
+
+/**
  * main - Entry point of the Simple Shell program
  *
- * Description: This function provides a command-line interface for the user.
- * It continuously displays a prompt, reads user input, trims spaces,
- * and executes the commands using child processes. The program exits
- * gracefully when EOF (Ctrl+D) is encountered.
- *
- * Return: Always 0 on success.
+ * Return: Exit status of the last executed command.
  */
 int main(void)
 {
 	char *line = NULL;
-	char *trimmed_line; /* Declare variable at the top of the block */
 	size_t len = 0;
 	ssize_t nread;
+	int exit_status = 0;
 
 	while (1)
 	{
-		/* Display the prompt only if the shell is interactive */
-		if (isatty(STDIN_FILENO))
-			printf("($) ");
-
-		/* Read user input */
+		display_prompt();
 		nread = getline(&line, &len, stdin);
 
-		/* Handle EOF (Ctrl+D) */
 		if (nread == -1)
 		{
 			if (isatty(STDIN_FILENO))
@@ -34,20 +33,15 @@ int main(void)
 			break;
 		}
 
-		/* Remove trailing newline */
 		line[strcspn(line, "\n")] = '\0';
 
-		/* Trim leading and trailing spaces */
-		trimmed_line = trim_spaces(line);
-
-		/* Ignore empty input */
-		if (strlen(trimmed_line) == 0)
+		if (strlen(line) == 0)
 			continue;
 
-		/* Execute commands using _fork */
-		_fork(trimmed_line);
+		exit_status = _fork(line);
 	}
 
-	free(line); /* Free the original buffer allocated by getline */
-	return (0);
+	free(line);
+	return (exit_status);
 }
+

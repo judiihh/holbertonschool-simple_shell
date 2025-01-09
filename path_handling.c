@@ -19,6 +19,23 @@ char *get_path_env(void)
 }
 
 /**
+ * check_command_permissions - Checks if a command has execution permission.
+ * @command: The command to check.
+ * @st: The stat structure containing file info.
+ *
+ * Return: 1 if the command is executable, 0 otherwise.
+ */
+int check_command_permissions(char *command, struct stat *st)
+{
+	if (!(st->st_mode & S_IXUSR))
+	{
+		fprintf(stderr, "%s: Permission denied\n", command);
+		return (0);
+	}
+	return (1);
+}
+
+/**
  * find_command_in_path - Finds the full path of a command.
  * @command: The command to search for.
  *
@@ -29,11 +46,9 @@ char *find_command_in_path(char *command)
 	struct stat st;
 	char *path, *path_copy, *token, *full_path;
 
-	/* Check if the command is an absolute or relative path */
-	if (stat(command, &st) == 0 && (st.st_mode & S_IXUSR))
-		return (strdup(command)); /* Command exists and is executable */
+	if (stat(command, &st) == 0 && check_command_permissions(command, &st))
+		return (strdup(command));
 
-	/* Search for the command in the PATH */
 	path = get_path_env();
 	if (!path)
 		return (NULL);
@@ -54,7 +69,7 @@ char *find_command_in_path(char *command)
 
 		sprintf(full_path, "%s/%s", token, command);
 
-		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		if (stat(full_path, &st) == 0 && check_command_permissions(command, &st))
 		{
 			free(path_copy);
 			return (full_path);
@@ -67,5 +82,7 @@ char *find_command_in_path(char *command)
 	free(path_copy);
 	return (NULL);
 }
+
+
 
 
