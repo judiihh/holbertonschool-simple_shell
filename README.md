@@ -63,3 +63,5 @@ Hello, I'm Judith Espinal, one of the developers behind this project. I invite y
 
 **Adolfo Rodriguez:** [GitHub Profile](https://github.com/Adolfo2231)
 [LinkedIn Profile](https://www.linkedin.com/in/adolfo-rodr%C3%ADguez-06393b339/)
+
+Hi, I'm Adolfo Rodriguez, a passionate developer and contributor to this project. Feel free to check out my work and connect with me on LinkedIn!
