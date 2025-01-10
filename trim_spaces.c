@@ -39,4 +39,3 @@ char *trim_spaces(char *line)
 
 	return (start);
 }
-
