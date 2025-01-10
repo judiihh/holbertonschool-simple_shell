@@ -24,4 +24,3 @@ int _fork(char *line);
 char *trim_spaces(char *line);
 
 #endif /* MAIN_H */
-
