@@ -37,44 +37,50 @@ char *get_path_env(void)
  */
 char *find_command_in_path(char *command)
 {
+	char *path, *token, *full_path;
 	struct stat st;
-	char *path, *path_copy, *token, *full_path;
 
-	/* Check if the command is an absolute or relative path */
-	if (stat(command, &st) == 0 && (st.st_mode & S_IXUSR))
-		return (strdup(command)); /* Command exists and is executable */
+	/* If command is already an absolute path */
+	if (command[0] == '/' && stat(command, &st) == 0)
+		return (strdup(command));
 
-	/* Get the PATH environment variable */
+	/* Get PATH environment variable */
 	path = get_path_env();
 	if (!path)
 		return (NULL);
 
-	path_copy = strdup(path);
-	if (!path_copy)
-		return (NULL);
-
-	token = strtok(path_copy, ":");
+	/* Tokenize and search */
+	token = strtok(strdup(path), ":");
 	while (token)
 	{
-		full_path = malloc(strlen(token) + strlen(command) + 2);
-		if (!full_path)
+		full_path = get_full_path(token, command);
+		if (stat(full_path, &st) == 0)
 		{
-			free(path_copy);
-			return (NULL);
+			free(token);
+			return (full_path);
 		}
-
-		sprintf(full_path, "%s/%s", token, command);
-
-		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
-		{
-			free(path_copy);
-			return (full_path); /* Command found */
-		}
-
 		free(full_path);
 		token = strtok(NULL, ":");
 	}
+	return (NULL);
+}
 
-	free(path_copy);
-	return (NULL); /* Command not found */
+/**
+ * get_full_path - Constructs the full path for a command in a given directory.
+ * @dir: Directory path.
+ * @command: Command name.
+ *
+ * Return: Pointer to the constructed full path (must be freed by the caller).
+ */
+char *get_full_path(char *dir, char *command)
+{
+	char *full_path;
+	size_t len;
+
+	len = strlen(dir) + strlen(command) + 2; /* +2 for '/' and null terminator */
+	full_path = malloc(len);
+	if (full_path)
+		snprintf(full_path, len, "%s/%s", dir, command);
+
+	return (full_path);
 }
