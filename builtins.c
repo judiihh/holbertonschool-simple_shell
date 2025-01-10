@@ -14,7 +14,6 @@ void print_env(void)
 	}
 }
 
-
 /**
  * handle_builtins - Handles built-in commands like "exit" and "env".
  * @line: Input command line.
@@ -38,4 +37,3 @@ int handle_builtins(char *line, char **argv)
 
 	return (0);
 }
-
