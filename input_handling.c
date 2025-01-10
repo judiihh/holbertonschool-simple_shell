@@ -9,7 +9,7 @@
  */
 int tokenize_input(char *line, char **argv)
 {
-	int i = 0;
+	int i = 0; /* integer for the input */
 
 	argv[i] = strtok(line, " ");
 	while (argv[i] != NULL && i < 99)
