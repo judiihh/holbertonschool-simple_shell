@@ -22,5 +22,6 @@ void handle_exit(char *line);
 int handle_builtins(char *line, char **argv);
 int _fork(char *line);
 char *trim_spaces(char *line);
+char *get_full_path(char *dir, char *command);
 
 #endif /* MAIN_H */
