@@ -26,14 +26,15 @@ int handle_builtins(char *line, char **argv)
 	if (argv[0] && strcmp(argv[0], "exit") == 0)
 	{
 		free(line);
-		exit(0);
+		exit(0); /* Exit the shell with success */
 	}
 
 	if (argv[0] && strcmp(argv[0], "env") == 0)
 	{
-		print_env();
+		print_env(); /* Print environment variables */
 		return (1);
 	}
 
-	return (0);
+	return (0); /* Not a built-in command */
 }
+

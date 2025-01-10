@@ -24,11 +24,9 @@ int execute_command(char *cmd, char **argv)
 	}
 	else if (pid > 0) /* Parent process */
 	{
-		wait(&status); /* Wait for the child process */
-
-		/* Return the exit status of the child process */
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status)); /* Exit status of the child */
+		wait(&status);
+		free(cmd);
+		return (WEXITSTATUS(status));
 	}
 	else /* Fork failed */
 	{
@@ -58,9 +56,10 @@ int _fork(char *line)
 	cmd = find_command_in_path(argv[0]);
 	if (!cmd)
 	{
-		fprintf(stderr, "%s: command not found\n", argv[0]);
-		return (-1); /* Skip fork */
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		return (127);
 	}
 
 	return (execute_command(cmd, argv));
 }
+

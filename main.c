@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * main - entry point of the simple shell program.
+ * main - Entry point of the simple shell program.
  *
  * Description:
  * This function provides a loop that acts as a command-line interface for
@@ -51,3 +51,4 @@ int main(void)
 	/* Return the exit status of the last executed command */
 	return (exit_status);
 }
+
