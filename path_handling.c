@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * get_path_env -Retrieves the value of the PATH or PATH1 environment variable.
  *
@@ -27,7 +28,6 @@ char *get_path_env(void)
 
 	return (NULL); /* Ninguna ruta encontrada */
 }
-
 
 /**
  * find_command_in_path - Finds the full path of a command.
@@ -78,8 +78,3 @@ char *find_command_in_path(char *command)
 	free(path_copy);
 	return (NULL); /* Command not found */
 }
-
-
-
-
-
