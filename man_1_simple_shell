@@ -3,7 +3,7 @@
 
 ### **man_1_simple_shell Updates**
 ```man
-.TH SIMPLE_SHELL 1 "December 2024" "Simple Shell" "User Commands"
+.TH SIMPLE_SHELL 1 "December 2024 - January 2025" "Simple Shell" "User Commands"
 
 .SH NAME
 simple_shell \- a custom implementation of the Unix shell
@@ -43,4 +43,3 @@ file1 file2 file3
 .SH AUTHORS
 Adolfo Rodriguez <adolfo.rodriguez2231@gmail.com>
 Judith Espinal <j.espinalm12@gmail.com>
-
